@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "452549042160",
+    "firebase_url": "https://fb-project2-c7018-default-rtdb.firebaseio.com",
+    "project_id": "fb-project2-c7018",
+    "storage_bucket": "fb-project2-c7018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452549042160:android:63659c912c0ffee5250735",
+        "android_client_info": {
+          "package_name": "com.example.fb_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACIVcQWVRi0WD6OzEisqmYrJSe5Kefeh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
