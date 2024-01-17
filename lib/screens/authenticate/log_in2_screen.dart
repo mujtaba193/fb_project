@@ -1,3 +1,4 @@
+import 'package:fb_project/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen2 extends StatefulWidget {
@@ -14,6 +15,9 @@ class _LoginScreen2State extends State<LoginScreen2> {
   TextEditingController password = TextEditingController();
   String email1 = '';
   String password1 = '';
+  String error = '';
+  final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,74 +68,91 @@ class _LoginScreen2State extends State<LoginScreen2> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  controller: email,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Your Email',
-                    hintStyle: const TextStyle(
-                      fontSize: 14,
-                    ),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        validator: (value) =>
+                            value!.isEmpty ? 'Email is required' : null,
+                        controller: email,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Your Email',
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            email1 = value;
+                          });
+                        },
+                      ),
+                      const Text('Password'),
+                      TextFormField(
+                        validator: (value) => value!.length < 8
+                            ? 'password must be mor than 8 chars'
+                            : null,
+                        controller: password,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Your Password',
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            password1 = value;
+                          });
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 5),
+                        alignment: Alignment.topRight,
+                        child: const Text('Forgot Password?'),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      MaterialButton(
+                        height: 50,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            dynamic result =
+                                await _auth.loginwithEmail(email1, password1);
+                          }
+                        },
+                        color: const Color.fromARGB(255, 211, 196, 181),
+                        child: const Text('Login'),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      MaterialButton(
+                        height: 50,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        onPressed: () {},
+                        color: const Color.fromARGB(255, 105, 105, 105),
+                        child: const Text('Login with Google'),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      email1 = value;
-                    });
-                  },
-                ),
-                const Text('Password'),
-                TextFormField(
-                  controller: password,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Your Password',
-                    hintStyle: const TextStyle(
-                      fontSize: 14,
-                    ),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      password1 = value;
-                    });
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 5),
-                  alignment: Alignment.topRight,
-                  child: const Text('Forgot Password?'),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
               ],
-            ),
-            MaterialButton(
-              height: 50,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              onPressed: () {},
-              color: const Color.fromARGB(255, 211, 196, 181),
-              child: const Text('Login'),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            MaterialButton(
-              height: 50,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              onPressed: () {},
-              color: const Color.fromARGB(255, 105, 105, 105),
-              child: const Text('Login with Google'),
-            ),
-            const SizedBox(
-              height: 20,
             ),
             InkWell(
               onTap: () {},

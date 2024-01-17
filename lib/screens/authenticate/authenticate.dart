@@ -1,4 +1,4 @@
-import 'package:fb_project/screens/authenticate/sign_in2_screen.dart';
+import 'package:fb_project/screens/authenticate/log_in2_screen.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {
@@ -12,7 +12,7 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SignIn2(),
+      child: LoginScreen2(),
     );
   }
 }
