@@ -1,3 +1,4 @@
+import 'package:fb_project/main.dart';
 import 'package:fb_project/screens/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getDeviceToken();
+    initPushNotification();
 
     super.initState();
   }
@@ -26,6 +28,19 @@ class _HomePageState extends State<HomePage> {
 
     await _fbMessaging.requestPermission();
     print('hhhhhhhhh this is the token: $_token');
+  }
+
+  void handleMessage(RemoteMessage? message) {
+    if (message == null) return; // if the message is null do nothing
+    naviKey.currentState?.pushNamed('/newPage', arguments: message);
+  }
+
+  // function to initialize background settings
+  Future initPushNotification() async {
+    // handle notification if the app was terminated and opened
+    FirebaseMessaging.instance.getInitialMessage().then((handleMessage));
+    // attach event listeners for when a notification opens the app
+    FirebaseMessaging.onMessageOpenedApp.listen((handleMessage));
   }
 
   @override
