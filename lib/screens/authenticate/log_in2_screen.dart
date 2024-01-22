@@ -1,3 +1,4 @@
+import 'package:fb_project/screens/authenticate/sign_in2_screen.dart';
 import 'package:fb_project/screens/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -155,7 +156,12 @@ class _LoginScreen2State extends State<LoginScreen2> {
               ],
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return SignIn2();
+                }));
+              },
               child: const Center(
                 child: Text.rich(TextSpan(children: [
                   TextSpan(text: "Don't have account?"),
