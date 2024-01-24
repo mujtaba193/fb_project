@@ -12,11 +12,19 @@ class _SignIn2State extends State<SignIn2> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController userName = TextEditingController();
-  //String usernamee = '';
+  String usernamee = '';
   String emaill = '';
   String passwordd = '';
+
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
+  /*Future addUserDetails(String userName, String email) async {
+    // CollectionReference<Map<String, dynamic>> add = _inst.collection('users');
+    await FirebaseFirestore.instance.collection('users').doc().set({
+      'name': userName,
+      'email': email,
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +96,6 @@ class _SignIn2State extends State<SignIn2> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text('Email'),
                 const SizedBox(
                   height: 10,
                 ),
@@ -96,6 +103,35 @@ class _SignIn2State extends State<SignIn2> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      const Text('User Name'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: userName,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Your Name',
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            usernamee = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text('Email'),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         validator: (value) =>
                             value!.isEmpty ? 'Email is required' : null,
@@ -152,12 +188,14 @@ class _SignIn2State extends State<SignIn2> {
                     height: 50,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
-                    onPressed: () async {
-                      setState(() async {
+                    onPressed: () {
+                      setState(() {
                         if (_formKey.currentState!.validate()) {
                           dynamic result =
-                              await _auth.signUpwithEmail(emaill, passwordd);
+                              _auth.signUpwithEmail(emaill, passwordd);
                         }
+                        AuthService().addUserDetails(
+                            userName.text.toString(), email.text.toString());
                         print(emaill);
                         print(passwordd);
                       });

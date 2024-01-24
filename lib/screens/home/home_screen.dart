@@ -67,7 +67,6 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 50,
             ),
-            Text(_token),
           ],
         ),
       ),

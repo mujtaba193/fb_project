@@ -1,8 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_project/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController userName = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _inst = FirebaseFirestore.instance;
   // create user object based on User (FirebaseUser)
   Userr? _userFromFirebaseUser(User? user) {
     return Userr(uid: user!.uid);
@@ -42,6 +48,15 @@ class AuthService {
       print(error.toString());
       return null;
     }
+  }
+
+  // add user details
+  Future addUserDetails(String userName, String email) async {
+    // CollectionReference<Map<String, dynamic>> add = _inst.collection('users');
+    await FirebaseFirestore.instance.collection('users').doc().set({
+      'name': userName,
+      'email': email,
+    });
   }
 
   // sin out
