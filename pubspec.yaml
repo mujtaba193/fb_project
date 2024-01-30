@@ -52,6 +52,12 @@ dependencies:
   url_launcher: ^6.2.3
   flutter_riverpod: ^2.4.9
   provider: ^6.1.1
+  flutter_svg: ^2.0.9
+  flutter_toggle_tab: ^1.4.1
+  toggle_switch: ^2.1.0
+  equatable: ^2.0.5
+  percent_indicator: ^4.2.3
+  jiffy: ^6.2.2
 
 dev_dependencies:
   flutter_test:

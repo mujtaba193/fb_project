@@ -7,7 +7,7 @@ class UsersProfileModel {
   UsersProfileModel({required this.name, required this.email});
   factory UsersProfileModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    final data = document.data();
-    return UsersProfileModel(name: data?["name"], email: data?["email"]);
+    final datat = document.data();
+    return UsersProfileModel(name: datat?["name"], email: datat?["email"]);
   }
 }

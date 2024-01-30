@@ -1,25 +1,41 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_project/main.dart';
+import 'package:fb_project/models/users_profile_model.dart';
+import 'package:fb_project/providers/users_profile_provider.dart';
 import 'package:fb_project/screens/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   final AuthService _auth = AuthService();
   String _token = '';
   @override
   void initState() {
     getDeviceToken();
     initPushNotification();
+    fetchDataFromFire();
 
     super.initState();
+  }
+
+  Future<List<UsersProfileModel>> fetchDataFromFire() async {
+    final snapShot = await FirebaseFirestore.instance.collection('users').get();
+    final usersProfilData =
+        snapShot.docs.map((e) => UsersProfileModel.fromSnapshot(e)).toList();
+
+    print("this is **********************************$usersProfilData");
+    return usersProfilData;
   }
 
   void getDeviceToken() async {
@@ -45,6 +61,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final usersData = ref.watch(usersProfileProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
@@ -60,27 +78,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Text('This is home page'),
-            SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
+      body: usersData.when(
+        data: (mm) {
+          return ListView.builder(
+            itemBuilder: ((context, index) {
+              return ListTile(
+                title: Text(mm.name),
+                subtitle: Text(mm.email),
+              );
+            }),
+          );
+        },
+        error: ((error, StackTrace) => const Text('error')),
+        loading: (() {
+          return const Center(child: CircularProgressIndicator());
+        }),
       ),
     );
-  }
-}
-
-class FbApi {
-  // create instance of firebase messaging.
-  final _fbMessaging = FirebaseMessaging.instance;
-
-  // create function to initialize notification
-  Future<void> initNotification() async {
-    // request permission from the user to send notifications
-    await _fbMessaging.requestPermission();
   }
 }

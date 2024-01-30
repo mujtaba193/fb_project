@@ -1,3 +1,4 @@
+import 'package:fb_project/screens/authenticate/reset_password.dart';
 import 'package:fb_project/screens/authenticate/sign_in2_screen.dart';
 import 'package:fb_project/screens/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,14 @@ class _LoginScreen2State extends State<LoginScreen2> {
                       Container(
                         margin: const EdgeInsets.only(top: 5),
                         alignment: Alignment.topRight,
-                        child: const Text('Forgot Password?'),
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return ResetPasswordScreen();
+                              }));
+                            },
+                            child: const Text('Forgot Password?')),
                       ),
                       const SizedBox(
                         height: 10,

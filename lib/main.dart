@@ -5,7 +5,8 @@ import 'package:fb_project/screens/home/wrapper.dart';
 import 'package:fb_project/screens/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart' as ppr;
 
 final naviKey = GlobalKey<NavigatorState>();
 void main() async {
@@ -13,7 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -21,7 +22,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Userr?>.value(
+    return ppr.StreamProvider<Userr?>.value(
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
