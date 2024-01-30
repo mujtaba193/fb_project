@@ -164,13 +164,28 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         Center(
                           child: InkWell(
                             onTap: () async {
-                              await _auth.resetPassword(email).then((value) =>
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return ResetPassword2(
-                                      email: email.text,
+                              if (email.text.isNotEmpty) {
+                                await _auth.resetPassword(email).then((value) {
+                                  if (value == 'invalid-email') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('wrong email'),
+                                      ),
                                     );
-                                  })));
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return ResetPassword2(
+                                            email: email.text,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  }
+                                });
+                              }
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,

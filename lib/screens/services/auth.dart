@@ -79,10 +79,11 @@ class AuthService {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
     } on FirebaseAuthException catch (e) {
+      return e.code;
+
       print('**************Hi this is the error *****************$e');
     }
-  }
-  /*void getDeviceToken() async {
+    /*void getDeviceToken() async {
     final _fbMessaging = FirebaseMessaging.instance;
     _token = await FirebaseMessaging.instance.getToken() ?? '';
 
@@ -102,4 +103,5 @@ class AuthService {
     // attach event listeners for when a notification opens the app
     FirebaseMessaging.onMessageOpenedApp.listen((handleMessage));
   }*/
+  }
 }
