@@ -146,11 +146,6 @@ class _SignIn2State extends State<SignIn2> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            emaill = value;
-                          });
-                        },
                       ),
                       const SizedBox(
                         height: 10,
@@ -171,11 +166,6 @@ class _SignIn2State extends State<SignIn2> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            passwordd = value;
-                          });
-                        },
                       ),
                     ],
                   ),
@@ -192,12 +182,10 @@ class _SignIn2State extends State<SignIn2> {
                       setState(() {
                         if (_formKey.currentState!.validate()) {
                           dynamic result =
-                              _auth.signUpwithEmail(emaill, passwordd);
+                              _auth.signUpwithEmail(email.text, password.text);
                         }
                         AuthService().addUserDetails(
                             userName.text.toString(), email.text.toString());
-                        print(emaill);
-                        print(passwordd);
                       });
                     },
                     color: const Color.fromARGB(255, 211, 196, 181),

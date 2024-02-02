@@ -93,7 +93,9 @@ class _ResetPassword2State extends State<ResetPassword2> {
                 ),
                 Center(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.only(left: 25, right: 25),

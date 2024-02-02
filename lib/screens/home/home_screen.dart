@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_project/main.dart';
-import 'package:fb_project/models/users_profile_model.dart';
 import 'package:fb_project/providers/users_profile_provider.dart';
 import 'package:fb_project/screens/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,19 +22,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     getDeviceToken();
     initPushNotification();
-    fetchDataFromFire();
+    //fetchDataFromFire();
 
     super.initState();
   }
 
-  Future<List<UsersProfileModel>> fetchDataFromFire() async {
+  /*Future<List<UsersProfileModel>> fetchDataFromFire() async {
     final snapShot = await FirebaseFirestore.instance.collection('users').get();
     final usersProfilData =
         snapShot.docs.map((e) => UsersProfileModel.fromSnapshot(e)).toList();
 
-    print("this is **********************************$usersProfilData");
+    print("this is *******************%%%%%%***************$usersProfilData");
     return usersProfilData;
-  }
+  }*/
 
   void getDeviceToken() async {
     final _fbMessaging = FirebaseMessaging.instance;
@@ -80,16 +78,17 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: usersData.when(
         data: (mm) {
-          return ListView.builder(
-            itemBuilder: ((context, index) {
-              return ListTile(
-                title: Text(mm.name),
-                subtitle: Text(mm.email),
-              );
-            }),
-          );
+          return ListView(
+              children: mm
+                  .map(
+                    (e) => ListTile(
+                      title: Text(e.name),
+                      subtitle: Text(e.email),
+                    ),
+                  )
+                  .toList());
         },
-        error: ((error, StackTrace) => const Text('error')),
+        error: ((error, StackTrace) => const Text('Wo!. its error Chutia')),
         loading: (() {
           return const Center(child: CircularProgressIndicator());
         }),

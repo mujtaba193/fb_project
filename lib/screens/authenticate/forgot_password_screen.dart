@@ -62,7 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       color: const Color.fromARGB(255, 131, 105, 136),
                       onPressed: () async {
                         await _auth
-                            .resetPassword(email)
+                            .resetPassword(email.text)
                             .then((value) => showDialog(
                                 context: context,
                                 builder: (context) {

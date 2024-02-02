@@ -16,7 +16,7 @@ class AuthService {
 
   // create user object based on User (FirebaseUser)
   Userr? _userFromFirebaseUser(User? user) {
-    return Userr(uid: user!.uid);
+    return Userr(uid: user?.uid);
   }
 
   // auth change user stream
@@ -75,9 +75,9 @@ class AuthService {
   }
 
   // reset password method.
-  Future resetPassword(TextEditingController email) async {
+  Future resetPassword(String email) async {
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       return e.code;
 

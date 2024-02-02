@@ -150,11 +150,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onChanged: (value) {
-                                setState(() {
-                                  email1 = value;
-                                });
-                              },
                             ),
                           ),
                         ),
@@ -165,7 +160,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           child: InkWell(
                             onTap: () async {
                               if (email.text.isNotEmpty) {
-                                await _auth.resetPassword(email).then((value) {
+                                await _auth
+                                    .resetPassword(email.text)
+                                    .then((value) {
                                   if (value == 'invalid-email') {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
